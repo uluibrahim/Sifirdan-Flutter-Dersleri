@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        body: buildRowAndColumn(),
+        body: buildRowForExpandedAndFlexible(),
 
         /**
          * BODY
@@ -150,4 +150,64 @@ Widget buildColumn() {
       ),
     ],
   );
+}
+
+Widget buildRowForExpandedAndFlexible() {
+  return Row(
+    children: flexibleContainerListesi,
+  );
+}
+
+List<Widget> get expandedContainerListesi {
+  return [
+    Expanded(
+      flex: 2,
+      child: Container(
+        height: 100,
+        color: Colors.red,
+      ),
+    ),
+    Expanded(
+      flex: 1,
+      child: Container(
+        height: 100,
+        color: Colors.blue,
+      ),
+    ),
+    Expanded(
+      flex: 3,
+      child: Container(
+        height: 100,
+        color: Colors.orange,
+      ),
+    ),
+    Expanded(
+      flex: 2,
+      child: Container(
+        height: 100,
+        color: Colors.teal,
+      ),
+    ),
+  ];
+}
+
+List<Widget> get flexibleContainerListesi {
+  return [
+    Flexible(
+      flex: 2,
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 100),
+        height: 100,
+        color: Colors.red,
+      ),
+    ),
+    Flexible(
+      flex: 2,
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 150),
+        height: 100,
+        color: Colors.blue,
+      ),
+    ),
+  ];
 }
