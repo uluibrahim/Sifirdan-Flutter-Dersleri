@@ -5,6 +5,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final String _imgUrl = "https://picsum.photos/200/300";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,17 +28,27 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(
           child: Container(
+            child: FlutterLogo(
+              // style: FlutterLogoStyle.horizontal,
+              size: 200,
+            ),
             padding: EdgeInsets.all(20),
-            height: 200,
-            width: 200,
-            color: Colors.red,
-            child: Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.all(20),
-              color: Colors.blue,
-              height: 50,
-              width: 50,
-              child: Text("Emre"),
+            decoration: BoxDecoration(
+              // color: Colors.teal,
+              shape: BoxShape.rectangle,
+              border: Border.all(
+                width: 4,
+                color: Colors.red,
+              ),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40),
+                bottomRight: Radius.circular(40),
+              ),
+              image: DecorationImage(
+                image: NetworkImage(_imgUrl),
+                fit: BoxFit.cover,
+                repeat: ImageRepeat.repeat,
+              ),
             ),
           ),
         ),
