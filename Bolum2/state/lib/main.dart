@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'image_widgets.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,50 +25,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Material App Bar'),
+        title: Text('Image Widgets'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MyNewTextWidget(),
-            Text(
-              _counter.toString(),
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
+      body: ImageWidgets(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print("Buton tıklandı $_counter");
-          counterArttir();
-        },
+        onPressed: () {},
         child: Icon(Icons.add),
       ),
-    );
-  }
-
-  void counterArttir() {
-    setState(() => _counter++);
-  }
-}
-
-class MyNewTextWidget extends StatelessWidget {
-  const MyNewTextWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      'Stateless widget',
-      style: Theme.of(context).textTheme.headline4,
     );
   }
 }
