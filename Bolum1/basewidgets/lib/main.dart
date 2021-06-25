@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        body: buildRowForExpandedAndFlexible(),
+        body: odev(),
 
         /**
          * BODY
@@ -52,42 +52,42 @@ class MyApp extends StatelessWidget {
       title: "Base widget",
     );
   }
+}
 
-  Widget buildCenter() {
-    return Center(
-      child: Container(
-        child: FlutterLogo(
-          // style: FlutterLogoStyle.horizontal,
-          size: 200,
+Widget buildCenter(String imgUrl) {
+  return Center(
+    child: Container(
+      child: FlutterLogo(
+        // style: FlutterLogoStyle.horizontal,
+        size: 200,
+      ),
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        // color: Colors.teal,
+        shape: BoxShape.rectangle,
+        border: Border.all(
+          width: 4,
+          color: Colors.red,
         ),
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          // color: Colors.teal,
-          shape: BoxShape.rectangle,
-          border: Border.all(
-            width: 4,
-            color: Colors.red,
-          ),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40),
-            bottomRight: Radius.circular(40),
-          ),
-          image: DecorationImage(
-            image: NetworkImage(_imgUrl),
-            fit: BoxFit.cover,
-            repeat: ImageRepeat.repeat,
-          ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          bottomRight: Radius.circular(40),
+        ),
+        image: DecorationImage(
+          image: NetworkImage(imgUrl),
+          fit: BoxFit.cover,
+          repeat: ImageRepeat.repeat,
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
-  Widget buildRowAndColumn() {
-    return Container(
-      color: Colors.red.shade200,
-      child: buildColumn(),
-    );
-  }
+Widget buildRowAndColumn() {
+  return Container(
+    color: Colors.red.shade200,
+    child: buildColumn(),
+  );
 }
 
 Widget buildRow() {
@@ -210,4 +210,127 @@ List<Widget> get flexibleContainerListesi {
       ),
     ),
   ];
+}
+
+Widget odev() {
+  return Container(
+    padding: EdgeInsets.all(5),
+    child: Column(
+      //mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        rowForOdev(),
+        SizedBox(height: 5,),
+        Expanded(
+          child: columnForOdev(),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget rowForOdev() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(
+        child: Container(
+          alignment: Alignment.center,
+          height: 60,
+          width: 60,
+          child: Text(
+            "D",
+            style: TextStyle(fontSize: 30),
+          ),
+          color: Colors.orange.shade100,
+        ),
+      ),
+      Flexible(
+        child: Container(
+          alignment: Alignment.center,
+          height: 60,
+          width: 60,
+          child: Text("A", style: TextStyle(fontSize: 30)),
+          color: Colors.orange.shade200,
+        ),
+      ),
+      Flexible(
+        child: Container(
+          alignment: Alignment.center,
+          height: 60,
+          width: 60,
+          child: Text("R", style: TextStyle(fontSize: 30)),
+          color: Colors.orange.shade300,
+        ),
+      ),
+      Flexible(
+        child: Container(
+          alignment: Alignment.center,
+          height: 60,
+          width: 60,
+          child: Text("T", style: TextStyle(fontSize: 30)),
+          color: Colors.orange.shade400,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget columnForOdev() {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        alignment: Alignment.center,
+        height: 60,
+        width: 60,
+        child: Text("E", style: TextStyle(fontSize: 30)),
+        color: Colors.orange.shade200,
+      ),
+      Container(
+        alignment: Alignment.center,
+        height: 60,
+        width: 60,
+        child: Text("R", style: TextStyle(fontSize: 30)),
+        color: Colors.orange.shade300,
+      ),
+      Container(
+        alignment: Alignment.center,
+        height: 60,
+        width: 60,
+        child: Text("S", style: TextStyle(fontSize: 30)),
+        color: Colors.orange.shade400,
+      ),
+      Container(
+        alignment: Alignment.center,
+        height: 60,
+        width: 60,
+        child: Text("L", style: TextStyle(fontSize: 30)),
+        color: Colors.orange.shade500,
+      ),
+      Container(
+        alignment: Alignment.center,
+        height: 60,
+        width: 60,
+        child: Text("E", style: TextStyle(fontSize: 30)),
+        color: Colors.orange.shade600,
+      ),
+      Container(
+        alignment: Alignment.center,
+        height: 60,
+        width: 60,
+        child: Text("R", style: TextStyle(fontSize: 30)),
+        color: Colors.orange.shade700,
+      ),
+      Container(
+        alignment: Alignment.center,
+        height: 60,
+        width: 60,
+        child: Text("İ", style: TextStyle(fontSize: 30)),
+        color: Colors.orange.shade800,
+      ),
+    ],
+  );
 }
