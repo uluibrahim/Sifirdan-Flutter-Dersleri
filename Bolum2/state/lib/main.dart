@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:state/popupmenu_kullan%C4%B1m%C4%B1.dart';
 import 'package:state/temel_button_turleri.dart';
 import 'dropdown_buttoon.dart';
 import 'image_widgets.dart';
@@ -59,8 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Image Widgets'),
+        actions: [PopUpMenuKullanimi()],
       ),
-      body: DropDownButtonKullanimi(),
+      body: PopUpMenuKullanimi(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(Icons.add),
