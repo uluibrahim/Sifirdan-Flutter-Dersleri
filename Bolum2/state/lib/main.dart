@@ -26,7 +26,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           children: [
             Text('Stateless widget'),
-            Text("Counter  0"),
+            Text("Counter  0 "),
           ],
         ),
       ),
