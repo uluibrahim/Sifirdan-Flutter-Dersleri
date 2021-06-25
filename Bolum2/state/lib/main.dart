@@ -8,7 +8,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      theme: ThemeData(primarySwatch: Colors.teal),
+      theme: ThemeData(
+          primarySwatch: Colors.teal,
+          textTheme: TextTheme(headline4: (TextStyle(color: Colors.blue)))),
       home: MyHomePage(),
     );
   }
@@ -33,10 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Stateless widget',
-              style: TextStyle(fontSize: 24),
-            ),
+            MyNewTextWidget(),
             Text(
               _counter.toString(),
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -56,5 +55,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void counterArttir() {
     setState(() => _counter++);
+  }
+}
+
+class MyNewTextWidget extends StatelessWidget {
+  const MyNewTextWidget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Stateless widget',
+      style: Theme.of(context).textTheme.headline4,
+    );
   }
 }
