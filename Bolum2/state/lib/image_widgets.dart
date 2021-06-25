@@ -8,7 +8,7 @@ class ImageWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Flexible(
             child: IntrinsicHeight(
@@ -40,6 +40,15 @@ class ImageWidgets extends StatelessWidget {
               ),
             ),
           ),
+          Container(
+            height: 400,
+            child: FadeInImage.assetNetwork(
+              placeholder: "assets/images/loading.png",
+              image: _networkImageUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Expanded(child: Placeholder()),
         ],
       ),
     );
