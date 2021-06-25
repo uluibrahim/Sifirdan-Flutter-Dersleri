@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:state/temel_button_turleri.dart';
+import 'dropdown_buttoon.dart';
 import 'image_widgets.dart';
 
 void main() => runApp(MyApp());
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Image Widgets'),
       ),
-      body: TemelButonlar(),
+      body: DropDownButtonKullanimi(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(Icons.add),
