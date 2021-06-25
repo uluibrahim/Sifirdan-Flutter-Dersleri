@@ -8,24 +8,38 @@ class ImageWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 200,
-            width: 200,
-            child: Image.asset(_assetImageUrl,fit: BoxFit.cover),
+          Flexible(
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 100,
+                      child: Image.asset(_assetImageUrl, fit: BoxFit.cover),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Image.network(_networkImageUrl, fit: BoxFit.cover),
+                    ),
+                  ),
+                  Expanded(
+                    child: CircleAvatar(
+                      //child: Text("ULU"),
+                      backgroundColor:
+                          Colors.blueAccent, // circle avatarın arka plan rengi
+                      foregroundColor: Colors.red, // child in rengi
+                      foregroundImage: NetworkImage(_networkImageUrl),
+                      radius: 50,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          Container(
-            height: 200,
-            width: 200,
-            child: Image.network(_networkImageUrl,fit: BoxFit.cover),
-          ),
-          CircleAvatar(
-            //child: Text("ULU"),
-            backgroundColor: Colors.blueAccent,// circle avatarın arka plan rengi
-            foregroundColor: Colors.red,// child in rengi
-            foregroundImage:NetworkImage(_networkImageUrl),
-            radius: 50,
-          )
         ],
       ),
     );
