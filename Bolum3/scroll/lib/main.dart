@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'card_list_tile.dart';
+import 'custom_scroll_view.dart';
 import 'grid_view.dart';
 import 'list_view_kullanimi.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       home: SafeArea(
-        child: GridViewKullanimi(),
+        child: CustomScrollViewKullanimi(),
       ),
       builder: EasyLoading.init(),
     );
