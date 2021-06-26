@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'card_list_tile.dart';
+import 'grid_view.dart';
 import 'list_view_kullanimi.dart';
 
 void main() {
@@ -16,7 +17,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: ListViewKullanimi(),
+      home: SafeArea(
+        child: GridViewKullanimi(),
+      ),
       builder: EasyLoading.init(),
     );
   }
