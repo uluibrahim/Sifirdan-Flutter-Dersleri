@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class ListViewKullanimi extends StatelessWidget {
   List<Ogrenci> tumOgrenciler = List.generate(500,
@@ -25,7 +26,17 @@ class ListViewKullanimi extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
           child: ListTile(
-            onTap: () => print("List tile tıklanıldı $index"),
+            onTap: () {
+              print("List tile tıklanıldı $index");
+              EasyLoading.showToast(
+                "Toast",
+                duration: Duration(seconds: 3),
+                toastPosition: EasyLoadingToastPosition.center,
+                maskType: EasyLoadingMaskType.custom, // arka plan ayarı
+                dismissOnTap:
+                    true, // farklı yere tıklandığında kapatılmasını sağlar
+              );
+            },
             title: Text(ogrenci.isim),
             subtitle: Text(ogrenci.soyad),
             leading: CircleAvatar(
