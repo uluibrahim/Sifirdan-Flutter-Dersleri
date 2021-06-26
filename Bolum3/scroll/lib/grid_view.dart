@@ -14,7 +14,27 @@ class GridViewKullanimi extends StatelessWidget {
             "data",
             textAlign: TextAlign.center,
           ),
-          color: Colors.teal[index % 9 * 100],
+          decoration: BoxDecoration(
+            // color: Colors.teal[index % 9 * 100],
+            gradient: LinearGradient(
+                colors: [Colors.tealAccent, Colors.orange],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight),
+            image: DecorationImage(
+              image: NetworkImage(
+                  "https://picsum.photos/id/870/200/300?grayscale&blur=2"),
+            ),
+            border: Border.all(color: Colors.blue, width: 5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.red,
+                blurRadius: 5,
+                offset: Offset(10, 10),
+              ),
+            ],
+            shape: BoxShape.circle,
+          ),
+          margin: EdgeInsets.all(20),
         );
       },
     );
