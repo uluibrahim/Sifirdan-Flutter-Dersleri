@@ -30,6 +30,22 @@ class _CardListTileState extends State<CardListTile> {
     );
   }
 
+  SingleChildScrollView buildScrollChild() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          buildCard(),
+          buildCard(),
+          buildCard(),
+          buildCard(),
+          buildCard(),
+          buildCard(),
+          buildCard(),
+        ],
+      ),
+    );
+  }
+
   Column buildCard() {
     return Column(
       children: [
