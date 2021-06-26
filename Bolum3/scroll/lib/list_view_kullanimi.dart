@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ListViewKullanimi extends StatelessWidget {
@@ -9,27 +11,91 @@ class ListViewKullanimi extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Listview kullanımı")),
       body: Container(
-        child: ListView(
-          children: tumOgrenciler
-              .map(
-                (Ogrenci e) => Card(
-                  color: Colors.cyan.shade200,
-                  child: ListTile(
-                    title: Text(e.isim),
-                    subtitle: Text(e.soyad),
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.blueGrey.shade400,
-                      child: Text(
-                        e.ogrId.toString(),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+        child: buildListViewSeparated(),
+      ),
+    );
+  }
+
+  ListView buildListViewSeparated() {
+    return ListView.separated(
+      itemBuilder: (BuildContext context, int index) {
+        var ogrenci = tumOgrenciler[index];
+        return Card(
+          color: Colors.cyan[((index + 1) % 10 * 100)],
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+          child: ListTile(
+            onTap: () => print("List tile tıklanıldı $index"),
+            title: Text(ogrenci.isim),
+            subtitle: Text(ogrenci.soyad),
+            leading: CircleAvatar(
+              backgroundColor: Colors.blueGrey.shade400,
+              child: Text(
+                ogrenci.ogrId.toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      },
+      itemCount: tumOgrenciler.length,
+      separatorBuilder: (context, index) {
+        return Divider(
+          color: Colors.red,
+          endIndent: 60,
+          indent: 60,
+          thickness: 2,
+        );
+      },
+    );
+  }
+
+  ListView buildListViewBuilder() {
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) {
+        var ogrenci = tumOgrenciler[index];
+        return Card(
+          color: Colors.cyan[((index + 1) % 10 * 100)],
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+          child: ListTile(
+            onTap: () => print("List tile tıklanıldı $index"),
+            title: Text(ogrenci.isim),
+            subtitle: Text(ogrenci.soyad),
+            leading: CircleAvatar(
+              backgroundColor: Colors.blueGrey.shade400,
+              child: Text(
+                ogrenci.ogrId.toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      },
+      itemCount: tumOgrenciler.length,
+    );
+  }
+
+  ListView buildListView() {
+    return ListView(
+      children: tumOgrenciler
+          .map(
+            (Ogrenci e) => Card(
+              color: Colors.cyan.shade200,
+              child: ListTile(
+                title: Text(e.isim),
+                subtitle: Text(e.soyad),
+                leading: CircleAvatar(
+                  backgroundColor: Colors.blueGrey.shade400,
+                  child: Text(
+                    e.ogrId.toString(),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
-              )
-              .toList(),
-        ),
-      ),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
