@@ -5,38 +5,44 @@ class GridViewKullanimi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemBuilder: (BuildContext context, index) {
-        return Container(
-          child: Text(
-            "data",
-            textAlign: TextAlign.center,
-          ),
-          decoration: BoxDecoration(
-            // color: Colors.teal[index % 9 * 100],
-            gradient: LinearGradient(
-                colors: [Colors.tealAccent, Colors.orange],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight),
-            image: DecorationImage(
-              image: NetworkImage(
-                  "https://picsum.photos/id/870/200/300?grayscale&blur=2"),
-            ),
-            border: Border.all(color: Colors.blue, width: 5),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.red,
-                blurRadius: 5,
-                offset: Offset(10, 10),
+    return Scaffold(
+      appBar: AppBar(title: Text("Grid view")),
+      body: GridView.builder(
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (BuildContext context, index) {
+          return GestureDetector(
+            child: Container(
+              child: Text(
+                "data",
+                textAlign: TextAlign.center,
               ),
-            ],
-            shape: BoxShape.circle,
-          ),
-          margin: EdgeInsets.all(20),
-        );
-      },
+              decoration: BoxDecoration(
+                // color: Colors.teal[index % 9 * 100],
+                gradient: LinearGradient(
+                    colors: [Colors.tealAccent, Colors.orange],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight),
+                image: DecorationImage(
+                  image: NetworkImage(
+                      "https://picsum.photos/id/870/200/300?grayscale&blur=2"),
+                ),
+                border: Border.all(color: Colors.blue, width: 5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.red,
+                    blurRadius: 5,
+                    offset: Offset(10, 10),
+                  ),
+                ],
+                shape: BoxShape.circle,
+              ),
+              margin: EdgeInsets.all(20),
+            ),
+            onTap: () => print("Gesture detector $index"),
+          );
+        },
+      ),
     );
   }
 
