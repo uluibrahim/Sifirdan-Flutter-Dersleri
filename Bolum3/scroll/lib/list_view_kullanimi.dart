@@ -37,6 +37,9 @@ class ListViewKullanimi extends StatelessWidget {
                     true, // farklı yere tıklandığında kapatılmasını sağlar
               );
             },
+            onLongPress: () {
+              _alertDialogIslemleri(context, tumOgrenciler[index]);
+            },
             title: Text(ogrenci.isim),
             subtitle: Text(ogrenci.soyad),
             leading: CircleAvatar(
@@ -59,6 +62,37 @@ class ListViewKullanimi extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _alertDialogIslemleri(BuildContext context, Ogrenci ogrenci) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("${ogrenci}"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  Text("data\n" * 100),
+                ],
+              ),
+            ),
+            actions: [
+              ButtonBar(
+                alignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: () {}, child: Text("Tamam")),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Kapat")),
+                ],
+              ),
+            ],
+          );
+        });
   }
 
   ListView buildListViewBuilder() {
@@ -117,4 +151,10 @@ class Ogrenci {
   final String soyad;
 
   Ogrenci(this.ogrId, this.isim, this.soyad);
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'Ad: $isim Soyad: $soyad ID: $ogrId';
+  }
 }
