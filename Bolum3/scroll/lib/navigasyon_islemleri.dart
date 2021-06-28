@@ -53,6 +53,13 @@ class NavigasyonIslemleri extends StatelessWidget {
               },
               child: Text("D Sayfasına git ve veri getir"),
             ),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (contex) => ESayfasi()));
+              },
+              child: Text("e Sayfasına git ve geri gelme"),
+            ),
           ],
         ),
       ),
@@ -146,6 +153,24 @@ class DSayfasi extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ESayfasi extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("E SAYFASI"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Text("E SAYFASI"),
+          ],
         ),
       ),
     );
