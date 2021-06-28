@@ -29,12 +29,22 @@ class MyApp extends StatelessWidget {
         "/EPage": (context) => ESayfasi(),
         "/DPage": (context) => DSayfasi(),
         "APage": (context) => ASayfasi(),
+        "/listeSayfasi": (context) => ListeSayfasi(),
       },
-      initialRoute: "APage",
+      //initialRoute: "APage",
       // verilen rota bulunamazsa unknow çalışır
       // hata almamamk adına kullanılır
-      onUnknownRoute: (RouteSettings settings) =>
-          MaterialPageRoute(builder: (context) => ASayfasi()),
+      onUnknownRoute: (RouteSettings settings) => MaterialPageRoute(
+        builder: (context) => ASayfasi(),
+      ),
+      onGenerateRoute: (RouteSettings settings) {
+        List<String> pathElemanlari = settings.name.split("/");
+        if (pathElemanlari[1] == "detay") {
+          return MaterialPageRoute(
+              builder: (context) => ListeDetay(int.parse(pathElemanlari[2])));
+        }
+        return null;
+      },
     );
   }
 }

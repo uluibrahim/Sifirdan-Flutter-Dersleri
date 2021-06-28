@@ -64,6 +64,12 @@ class NavigasyonIslemleri extends StatelessWidget {
               child: Text("E Sayfasına git ve geri gelme"),
             ),
             SizedBox(height: 1),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, "/listeSayfasi");
+              },
+              child: Text("Liste sayfasına git "),
+            ),
           ],
         ),
       ),
@@ -176,6 +182,48 @@ class ESayfasi extends StatelessWidget {
             Text("E SAYFASI"),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ListeSayfasi extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Liste sayfası"),
+      ),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            child: Card(
+              child: ListTile(
+                title: Text("List elemanı ${index + 1}"),
+              ),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, "/detay/$index");
+            },
+          );
+        },
+        itemCount: 20,
+      ),
+    );
+  }
+}
+
+class ListeDetay extends StatelessWidget {
+  int index;
+  ListeDetay(this.index);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Detay ${index + 1}"),
+      ),
+      body: Center(
+        child: Text("Gelen index değeri $index"),
       ),
     );
   }
