@@ -19,10 +19,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: SafeArea(
-        child: NavigasyonIslemleri(),
-      ),
+      //home: SafeArea(child: NavigasyonIslemleri()),
       builder: EasyLoading.init(),
+      routes: {
+        // kök dizin / ile gösterilir  program ilk açıldığında kök dizinden başlar
+        // burada kök dizin tanımlanmış home iptal edilmelidir aksi takdirde uygulamala ikisi arasında karar veremeyip hata verecektir.
+        "/": (context) => NavigasyonIslemleri(),
+        "/APage": (context) => ASayfasi(),
+        "/EPage": (context) => ESayfasi(),
+        "/DPage": (context) => DSayfasi(),
+      },
     );
   }
 }

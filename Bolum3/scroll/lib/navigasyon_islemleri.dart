@@ -14,8 +14,7 @@ class NavigasyonIslemleri extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (contex) => ASayfasi()));
+                Navigator.pushNamed(context, "/APage");
               },
               child: Text("A SAYFASINA GİT"),
             ),
@@ -55,10 +54,9 @@ class NavigasyonIslemleri extends StatelessWidget {
             ),
             OutlinedButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (contex) => ESayfasi()));
+                Navigator.pushReplacementNamed(context, "/EPage");
               },
-              child: Text("e Sayfasına git ve geri gelme"),
+              child: Text("E Sayfasına git ve geri gelme"),
             ),
           ],
         ),
