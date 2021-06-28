@@ -6,6 +6,7 @@ import 'card_list_tile.dart';
 import 'custom_scroll_view.dart';
 import 'grid_view.dart';
 import 'list_view_kullanimi.dart';
+import 'navigasyon_islemleri.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       home: SafeArea(
-        child: CustomScrollViewKullanimi(),
+        child: NavigasyonIslemleri(),
       ),
       builder: EasyLoading.init(),
     );
