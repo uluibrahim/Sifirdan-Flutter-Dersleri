@@ -28,7 +28,13 @@ class MyApp extends StatelessWidget {
         "/APage": (context) => ASayfasi(),
         "/EPage": (context) => ESayfasi(),
         "/DPage": (context) => DSayfasi(),
+        "APage": (context) => ASayfasi(),
       },
+      initialRoute: "APage",
+      // verilen rota bulunamazsa unknow çalışır
+      // hata almamamk adına kullanılır
+      onUnknownRoute: (RouteSettings settings) =>
+          MaterialPageRoute(builder: (context) => ASayfasi()),
     );
   }
 }

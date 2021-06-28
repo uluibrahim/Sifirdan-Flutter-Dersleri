@@ -11,6 +11,7 @@ class NavigasyonIslemleri extends StatelessWidget {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () {
@@ -18,6 +19,7 @@ class NavigasyonIslemleri extends StatelessWidget {
               },
               child: Text("A SAYFASINA GİT"),
             ),
+            SizedBox(height: 1),
             OutlinedButton(
               onPressed: () {
                 Navigator.push(context,
@@ -25,6 +27,7 @@ class NavigasyonIslemleri extends StatelessWidget {
               },
               child: Text("B Sayfasına git ve veri gönder"),
             ),
+            SizedBox(height: 1),
             GestureDetector(
               onTap: () {
                 Navigator.push(context,
@@ -32,6 +35,7 @@ class NavigasyonIslemleri extends StatelessWidget {
               },
               child: Text("C Sayfasına git ve geri gel"),
             ),
+            SizedBox(height: 1),
             GestureDetector(
               onTap: () {
                 Navigator.push<bool>(
@@ -52,12 +56,14 @@ class NavigasyonIslemleri extends StatelessWidget {
               },
               child: Text("D Sayfasına git ve veri getir"),
             ),
+            SizedBox(height: 1),
             OutlinedButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(context, "/EPage");
               },
               child: Text("E Sayfasına git ve geri gelme"),
             ),
+            SizedBox(height: 1),
           ],
         ),
       ),
