@@ -10,10 +10,12 @@ class _FormIslemleriState extends State<FormIslemleri> {
   String metin = "";
   int maxLine = 1;
   FocusNode _fNode;
+  TextEditingController control1;
 
   @override
   void initState() {
     super.initState();
+    control1 = TextEditingController(text: "Control");
     _fNode = FocusNode();
     _fNode.addListener(() {
       setState(() {
@@ -28,13 +30,26 @@ class _FormIslemleriState extends State<FormIslemleri> {
   @override
   void dispose() {
     _fNode.dispose();
+    control1.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: fabFocusNode(context),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: fabFocusNode(context),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: fabControl(),
+          )
+        ],
+      ),
       appBar: appBar(),
       body: ListView(
         children: [
@@ -55,8 +70,21 @@ class _FormIslemleriState extends State<FormIslemleri> {
     );
   }
 
+  FloatingActionButton fabControl() {
+    return FloatingActionButton(
+      onPressed: () {
+        print(control1.text.toString());
+        control1.text = "ssds";
+      },
+      child: Icon(Icons.add),
+      backgroundColor: Colors.teal,
+    );
+  }
+
   FloatingActionButton fabFocusNode(BuildContext context) {
     return FloatingActionButton(
+      child: Icon(Icons.add),
+      backgroundColor: Colors.orange,
       onPressed: () {
         FocusScope.of(context).requestFocus(_fNode);
       },
@@ -107,6 +135,7 @@ class _FormIslemleriState extends State<FormIslemleri> {
       autofocus: false,
       maxLines: 2,
       maxLength: 20,
+      controller: control1,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       onChanged: (value) {
         debugPrint("on chenged value $value");
