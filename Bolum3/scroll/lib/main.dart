@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:scroll/form_islemleri.dart';
 
 import 'card_list_tile.dart';
 import 'custom_scroll_view.dart';
@@ -24,12 +25,14 @@ class MyApp extends StatelessWidget {
       routes: {
         // kök dizin / ile gösterilir  program ilk açıldığında kök dizinden başlar
         // burada kök dizin tanımlanmış home iptal edilmelidir aksi takdirde uygulamala ikisi arasında karar veremeyip hata verecektir.
-        "/": (context) => NavigasyonIslemleri(),
+        "/": (context) => FormIslemleri(),
+        //"/": (context) => NavigasyonIslemleri(),
         "/APage": (context) => ASayfasi(),
         "/EPage": (context) => ESayfasi(),
         "/DPage": (context) => DSayfasi(),
         "APage": (context) => ASayfasi(),
         "/listeSayfasi": (context) => ListeSayfasi(),
+        // "/form_islemleri":(context)=>
       },
       //initialRoute: "APage",
       // verilen rota bulunamazsa unknow çalışır
