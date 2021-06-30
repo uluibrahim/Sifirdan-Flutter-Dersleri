@@ -6,6 +6,7 @@ import 'package:scroll/form_ve_textformfield_kullanimi.dart';
 
 import 'card_list_tile.dart';
 import 'custom_scroll_view.dart';
+import 'date_time_picker.dart';
 import 'diger_form_elemanlari.dart';
 import 'grid_view.dart';
 import 'list_view_kullanimi.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         // kök dizin / ile gösterilir  program ilk açıldığında kök dizinden başlar
         // burada kök dizin tanımlanmış home iptal edilmelidir aksi takdirde uygulamala ikisi arasında karar veremeyip hata verecektir.
-        "/": (context) => FormElemanlari(),
+        "/": (context) => DateTimePickerKullanimi(),
 
         //"/": (context) => TextFormFieldKullanimi(),
         // "/": (context) => FormIslemleri(),
