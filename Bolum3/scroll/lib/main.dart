@@ -6,6 +6,7 @@ import 'package:scroll/form_ve_textformfield_kullanimi.dart';
 
 import 'card_list_tile.dart';
 import 'custom_scroll_view.dart';
+import 'diger_form_elemanlari.dart';
 import 'grid_view.dart';
 import 'list_view_kullanimi.dart';
 import 'navigasyon_islemleri.dart';
@@ -26,7 +27,9 @@ class MyApp extends StatelessWidget {
       routes: {
         // kök dizin / ile gösterilir  program ilk açıldığında kök dizinden başlar
         // burada kök dizin tanımlanmış home iptal edilmelidir aksi takdirde uygulamala ikisi arasında karar veremeyip hata verecektir.
-        "/": (context) => TextFormFieldKullanimi(),
+        "/": (context) => FormElemanlari(),
+
+        //"/": (context) => TextFormFieldKullanimi(),
         // "/": (context) => FormIslemleri(),
         //"/": (context) => NavigasyonIslemleri(),
         "/APage": (context) => ASayfasi(),
