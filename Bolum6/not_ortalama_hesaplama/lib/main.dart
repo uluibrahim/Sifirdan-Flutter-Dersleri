@@ -52,7 +52,15 @@ class _MyHomePageState extends State<MyHomePage> {
       resizeToAvoidBottomInset:
           false, // klavye açıldığında ekran daralmasını önler
       appBar: appBar(),
-      body: buildBody(),
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          if (orientation == Orientation.portrait) {
+            return buildBody(orientation);
+          } else {
+            return buildBodyLandsape(orientation);
+          }
+        },
+      ),
     );
   }
 
@@ -67,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildBody() {
+  Widget buildBody(orientation) {
     return Container(
       //color: Colors.deepOrange.shade100,
       child: Column(
@@ -75,166 +83,180 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             flex: 40,
             // STATIC FORM TUTAN CONTAİNER
-            child: Container(
-              padding: EdgeInsets.all(10),
-              //color: Colors.teal.shade100,
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          hintText: "Ders Adı",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.length < 1) {
-                            return "Ders boş bırakılamaz";
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (value) {
-                          dersAdi = value;
-                          setState(() {
-                            tumDersler.add(
-                              Ders(
-                                ad: dersAdi!,
-                                kredi: dersKredisi!,
-                                harfdegeri: harfDegeri!,
-                              ),
-                            );
-                            _ortalama = 0;
-                            _ortalama = ortalamaHesapla();
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<int>(
-                                hint: Text("Kredi 1"),
-                                items: buildKrediListesi(),
-                                value: dersKredisi!,
-                                onChanged: (value) {
-                                  setState(() {
-                                    dersKredisi = value!;
-                                  });
-                                },
-                              ),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 0),
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 2, color: Colors.indigo),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<double>(
-                                hint: Text("AA"),
-                                items: buildHarfNotuListesi(),
-                                value: harfDegeri,
-                                onChanged: (value) {
-                                  setState(() {
-                                    harfDegeri = value;
-                                  });
-                                },
-                              ),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 0),
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 2, color: Colors.indigo),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        height: 70,
-                        decoration: BoxDecoration(
-                          border: BorderDirectional(
-                            bottom: BorderSide(),
-                            top: BorderSide(),
-                          ),
-                        ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(color: Colors.black),
-                            children: [
-                              TextSpan(
-                                text: tumDersler.length == 0
-                                    ? "Ders ekleyiniz"
-                                    : "Ortalama:   ",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 25),
-                              ),
-                              TextSpan(
-                                text: tumDersler.length == 0
-                                    ? ""
-                                    : "${_ortalama!.toStringAsFixed(2)}",
-                                style: TextStyle(
-                                  color: _ortalama! < 2
-                                      ? Colors.red
-                                      : Colors.green,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            child: staticContainer(),
           ),
           Expanded(
             flex: 70,
             // DINAMIC FORM TUTAN CONTAİNER
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
-                ),
-                color: Colors.indigoAccent.shade100,
-              ),
-              child: ListView.builder(
-                reverse: true,
-                itemBuilder: _listeElemanlariniOlustur,
-                itemCount: tumDersler.length,
-              ),
-            ),
+            child: dinamikContainerVeListeler(orientation),
           ),
         ],
+      ),
+    );
+  }
+
+  Container staticContainer() {
+    return Container(
+      padding: EdgeInsets.all(10),
+      //color: Colors.teal.shade100,
+      child: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Ders Adı",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.length < 1) {
+                    return "Ders boş bırakılamaz";
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (value) {
+                  dersAdi = value;
+                  setState(() {
+                    tumDersler.add(
+                      Ders(
+                        ad: dersAdi!,
+                        kredi: dersKredisi!,
+                        harfdegeri: harfDegeri!,
+                      ),
+                    );
+                    _ortalama = 0;
+                    _ortalama = ortalamaHesapla();
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<int>(
+                        hint: Text("Kredi 1"),
+                        items: buildKrediListesi(),
+                        value: dersKredisi!,
+                        onChanged: (value) {
+                          setState(() {
+                            dersKredisi = value!;
+                          });
+                        },
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: Colors.indigo),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<double>(
+                        hint: Text("AA"),
+                        items: buildHarfNotuListesi(),
+                        value: harfDegeri,
+                        onChanged: (value) {
+                          setState(() {
+                            harfDegeri = value;
+                          });
+                        },
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 0),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: Colors.indigo),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  border: BorderDirectional(
+                    bottom: BorderSide(),
+                    top: BorderSide(),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                child: Center(
+                  child: RichText(
+                    text: TextSpan(
+                      style: TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: tumDersler.length == 0
+                              ? "Ders ekleyiniz"
+                              : "Ortalama:   ",
+                          style: TextStyle(color: Colors.black, fontSize: 25),
+                        ),
+                        TextSpan(
+                          text: tumDersler.length == 0
+                              ? ""
+                              : "${_ortalama!.toStringAsFixed(2)}",
+                          style: TextStyle(
+                            color: _ortalama! < 2 ? Colors.red : Colors.green,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildBodyLandsape(orientation) {
+    return Container(
+      child: Row(
+        children: [
+          Expanded(child: staticContainer()),
+          Expanded(child: dinamikContainerVeListeler(orientation)),
+        ],
+      ),
+    );
+  }
+
+  Container dinamikContainerVeListeler(orientation) {
+    double radius = orientation == Orientation.portrait ? 40 : 0;
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(radius),
+          topRight: Radius.circular(radius),
+        ),
+        color: Colors.indigoAccent.shade100,
+      ),
+      child: ListView.builder(
+        reverse: true,
+        itemBuilder: _listeElemanlariniOlustur,
+        itemCount: tumDersler.length,
       ),
     );
   }
