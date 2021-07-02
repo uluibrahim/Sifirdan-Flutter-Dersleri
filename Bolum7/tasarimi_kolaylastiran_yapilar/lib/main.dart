@@ -21,11 +21,14 @@ class _MyAppState extends State<MyApp> {
   AramaSayfasi? aramaSayfasi;
   SettingsPage? ayarSayfasi;
   HesapPage? hesapSayfasi;
+
+  var keyAnaSayfa = PageStorageKey("key_ana_sayfa");
+  var keyAramaSayfasi = PageStorageKey("key_arama_sayfa");
   @override
   void initState() {
     super.initState();
-    anaSayfa = AnaSafya();
-    aramaSayfasi = AramaSayfasi();
+    anaSayfa = AnaSafya(keyAnaSayfa);
+    aramaSayfasi = AramaSayfasi(keyAramaSayfasi);
     ayarSayfasi = SettingsPage();
     hesapSayfasi = HesapPage();
     tumSayfalar = [anaSayfa, aramaSayfasi, hesapSayfasi, ayarSayfasi];
