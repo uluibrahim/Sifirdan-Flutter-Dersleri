@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/ana_sayfa.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/arama_sayfasi.dart';
-import 'package:tasarimi_kolaylastiran_yapilar/view/bottom_navigation_bar.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/drawer.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/font_kullanimi.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/hesap_sayfasi.dart';
