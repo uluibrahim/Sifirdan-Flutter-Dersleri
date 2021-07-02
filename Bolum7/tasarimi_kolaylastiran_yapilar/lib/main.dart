@@ -3,7 +3,8 @@ import 'package:tasarimi_kolaylastiran_yapilar/view/ana_sayfa.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/arama_sayfasi.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/drawer.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/font_kullanimi.dart';
-import 'package:tasarimi_kolaylastiran_yapilar/view/hesap_sayfasi.dart';
+
+import 'package:tasarimi_kolaylastiran_yapilar/view/page_view.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/settings_page.dart';
 
 void main() => runApp(MyApp());
@@ -20,18 +21,20 @@ class _MyAppState extends State<MyApp> {
   AnaSafya? anaSayfa;
   AramaSayfasi? aramaSayfasi;
   SettingsPage? ayarSayfasi;
-  HesapPage? hesapSayfasi;
+  PageViewKullanimi? pageView;
 
   var keyAnaSayfa = PageStorageKey("key_ana_sayfa");
   var keyAramaSayfasi = PageStorageKey("key_arama_sayfa");
+  var keyViewPageSayfasi = PageStorageKey("key_view_page_sayfa");
   @override
   void initState() {
     super.initState();
     anaSayfa = AnaSafya(keyAnaSayfa);
     aramaSayfasi = AramaSayfasi(keyAramaSayfasi);
     ayarSayfasi = SettingsPage();
-    hesapSayfasi = HesapPage();
-    tumSayfalar = [anaSayfa, aramaSayfasi, hesapSayfasi, ayarSayfasi];
+    pageView = PageViewKullanimi(keyViewPageSayfasi);
+
+    tumSayfalar = [anaSayfa, aramaSayfasi, pageView, ayarSayfasi];
   }
 
   @override
@@ -70,8 +73,8 @@ class _MyAppState extends State<MyApp> {
             label: 'Ara',
             backgroundColor: Colors.red),
         BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            label: 'Hesap',
+            icon: Icon(Icons.pageview),
+            label: 'Page View',
             backgroundColor: Colors.indigoAccent),
         BottomNavigationBarItem(
             icon: Icon(Icons.settings),
