@@ -6,7 +6,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: "Ubuntu"),
+      title: 'Tasarım',
       home: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -16,9 +18,34 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            child: Text(
-              'Hello World',
-              style: TextStyle(fontFamily: "Dancing", fontSize: 35),
+            child: Column(
+              children: [
+                Text(
+                  'Hello World',
+                  style: TextStyle(
+                    fontFamily: "Ubuntu",
+                    fontSize: 35,
+                  ),
+                ),
+                Text(
+                  'Hello World',
+                  style: TextStyle(
+                      fontFamily: "Ubuntu",
+                      fontSize: 35,
+                      fontWeight: FontWeight.w700),
+                ),
+                Text(
+                  'Hello World',
+                  style: TextStyle(
+                      fontFamily: "Dancing",
+                      fontSize: 35,
+                      fontWeight: FontWeight.w700),
+                ),
+                Text(
+                  'theme da tanımlanan tip ',
+                  style: TextStyle(fontSize: 30),
+                ),
+              ],
             ),
           ),
         ),
