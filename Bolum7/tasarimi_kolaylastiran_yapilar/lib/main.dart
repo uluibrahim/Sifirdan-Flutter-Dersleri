@@ -6,6 +6,7 @@ import 'package:tasarimi_kolaylastiran_yapilar/view/font_kullanimi.dart';
 
 import 'package:tasarimi_kolaylastiran_yapilar/view/page_view.dart';
 import 'package:tasarimi_kolaylastiran_yapilar/view/settings_page.dart';
+import 'package:tasarimi_kolaylastiran_yapilar/view/tab_bar.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,7 +35,7 @@ class _MyAppState extends State<MyApp> {
     ayarSayfasi = SettingsPage();
     pageView = PageViewKullanimi(keyViewPageSayfasi);
 
-    tumSayfalar = [anaSayfa, aramaSayfasi, pageView, ayarSayfasi];
+    tumSayfalar = [anaSayfa, aramaSayfasi, pageView];
   }
 
   @override
@@ -43,12 +44,18 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: "Ubuntu"),
       title: 'Tasarım',
-      home: Scaffold(
-        drawer: SafeArea(child: DrawerMenu()),
-        bottomNavigationBar: navMenu(),
-        appBar: appBar(),
-        body: Center(child: tumSayfalar![_currentIndex]),
-      ),
+      home: TabBarKullanimi(),
+    );
+  }
+
+  Scaffold buildScaffold() {
+    return Scaffold(
+      drawer: SafeArea(child: DrawerMenu()),
+      bottomNavigationBar: navMenu(),
+      appBar: appBar(),
+      body: _currentIndex < tumSayfalar!.length
+          ? tumSayfalar![_currentIndex]
+          : tumSayfalar![0],
     );
   }
 
