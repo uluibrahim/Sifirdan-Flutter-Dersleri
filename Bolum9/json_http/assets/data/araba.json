@@ -1,0 +1,53 @@
+[
+    {
+        "araba_adi":"Mercedes",
+        "ulke":"Almanya",
+        "kurulus_tarihi":1890,
+        "model":[
+            {
+                "model_adi":"A Serisi",
+                "fiyat":15000,
+                "benzilli":false
+            },
+            {
+                "model_adi":"C Serisi",
+                "fiyat":17000,
+                "benzilli":false
+            }
+        ]
+    },
+    {
+        "araba_adi":"Toyata",
+        "ulke":"Japonya",
+        "kurulus_tarihi":1700,
+        "model":[
+            {
+                "model_adi":"corolla",
+                "fiyat":12000,
+                "benzilli":true
+            },
+            {
+                "model_adi":"auris",
+                "fiyat":10000,
+                "benzilli":false
+            }
+        ]
+    },
+    {
+        "araba_adi":"Renault",
+        "ulke":"Fransa",
+        "kurulus_tarihi":1600,
+        "model":[
+            {
+                "model_adi":"Symbol",
+                "fiyat":5000,
+                "benzilli":true
+            },
+            {
+                "model_adi":"Fluance",
+                "fiyat":7000,
+                "benzilli":false
+            }
+        ]
+    }
+]
