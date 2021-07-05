@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'local_json_kullanimi.dart';
+import 'package:json_http/remote/remote_api.dart';
+import 'local/local_json_kullanimi.dart';
 
 void main() => runApp(MyApp());
 
@@ -61,15 +62,25 @@ class MyHomePage extends StatelessWidget {
         title: Text('Material App Bar'),
       ),
       body: Center(
-        child: Container(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => LocalJsonKullanimi()),
-              );
-            },
-            child: Text("data"),
-          ),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => LocalJsonKullanimi()),
+                );
+              },
+              child: Text("Local Json"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => RemoteApiKullanimi()),
+                );
+              },
+              child: Text("Remote Api"),
+            ),
+          ],
         ),
       ),
     );

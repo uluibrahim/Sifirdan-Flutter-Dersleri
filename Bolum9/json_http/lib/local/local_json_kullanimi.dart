@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'models/araba.dart';
-import 'models/araba_model.dart';
+import '../models/araba.dart';
+import '../models/araba_model.dart';
 
 class LocalJsonKullanimi extends StatefulWidget {
   @override
