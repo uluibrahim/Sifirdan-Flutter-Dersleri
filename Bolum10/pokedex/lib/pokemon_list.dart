@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pokedex/models/pokedex.dart';
+import 'package:pokedex/pokemon_detail.dart';
 
 class PokemonList extends StatefulWidget {
   PokemonList({Key? key}) : super(key: key);
@@ -16,12 +17,20 @@ class _PokemonListState extends State<PokemonList> {
 
   Pokedex? pokedex;
 
+  Future<Pokedex>? veri;
+
   Future<Pokedex> veriGetir() async {
     var response = await http.get(Uri.parse(url));
 
     var decodedJson = jsonDecode(response.body);
     pokedex = Pokedex.fromJson(decodedJson);
     return pokedex!;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    veri = veriGetir();
   }
 
   @override
@@ -32,7 +41,15 @@ class _PokemonListState extends State<PokemonList> {
       ),
       body: Center(
         child: Container(
-          child: futureBuilder(context),
+          child: OrientationBuilder(
+            builder: (BuildContext context, Orientation orientation) {
+              if (orientation == Orientation.portrait) {
+                return futureBuilder(context);
+              } else {
+                return futureBuilder2(context);
+              }
+            },
+          ),
         ),
       ),
     );
@@ -40,7 +57,7 @@ class _PokemonListState extends State<PokemonList> {
 
   FutureBuilder<Pokedex> futureBuilder(BuildContext context) {
     return FutureBuilder(
-      future: veriGetir(),
+      future: veri,
       builder: (context, AsyncSnapshot<Pokedex> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // veriler henüz gelmediyse çalışacak kısım
@@ -72,14 +89,71 @@ class _PokemonListState extends State<PokemonList> {
            */
 
           return GridView.count(
+            crossAxisCount: 2,
+            children: snapshot.data!.pokemon!.map((gelenPoke) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  child: Hero(
+                    tag: gelenPoke.img!,
+                    child: Card(
+                      elevation: 5,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: "assets/gif/tenor.gif",
+                        image: gelenPoke.img!,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => PokemonDetail(
+                              pokemon: gelenPoke,
+                            )));
+                  },
+                ),
+              );
+            }).toList(),
+          );
+        } else {
+          throw "hata alındı";
+        }
+      },
+    );
+  }
+
+  FutureBuilder<Pokedex> futureBuilder2(BuildContext context) {
+    return FutureBuilder(
+      future: veri,
+      builder: (context, AsyncSnapshot<Pokedex> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // veriler henüz gelmediyse çalışacak kısım
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          // veri getirme işlemi tamamlandıysa
+          return GridView.count(
             crossAxisCount: 3,
             children: snapshot.data!.pokemon!.map((gelenPoke) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 100,
-                  color: Colors.orange.shade500,
-                  child: Align(child: Text(gelenPoke.name.toString())),
+                child: InkWell(
+                  child: Hero(
+                    tag: gelenPoke.img!,
+                    child: Card(
+                      elevation: 5,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: "assets/gif/tenor.gif",
+                        image: gelenPoke.img!,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => PokemonDetail(
+                              pokemon: gelenPoke,
+                            )));
+                  },
                 ),
               );
             }).toList(),
