@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storage_dersleri/dosya_islemleri.dart';
 import 'package:storage_dersleri/shared_preferences_kullanimi.dart';
 
 void main() => runApp(MyApp());
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: SharedPrefKullanimi(),
+      home: DosyaIslemleri(),
     );
   }
 }
