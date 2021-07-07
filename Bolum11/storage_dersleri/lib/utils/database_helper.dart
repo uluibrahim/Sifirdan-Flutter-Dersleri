@@ -103,7 +103,7 @@ class DatabaseHelper {
     return sonuc;
   }
 
-  Future<int> tumOgrenciTablosunuSil(int id) async {
+  Future<int> tumOgrenciTablosunuSil() async {
     var db = await _getDatabase();
 
     var sonuc = await db.delete(_ogrenciTablo);
