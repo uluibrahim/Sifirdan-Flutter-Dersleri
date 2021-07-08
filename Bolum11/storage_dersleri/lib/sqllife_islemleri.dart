@@ -23,6 +23,7 @@ class _SqllifeIslemleriState extends State<SqllifeIslemleri> {
   @override
   void initState() {
     // uygulama ilk açıldığında veri tabınından veriler bir kereliğine alınır ve listeye aktarılır.
+    // işlem yapıldığında veri tabanı işlemi gerçekleştirir ancak veri tabanı en baştan tekrar okunmaz.
     // uygulama boyunca liste ile çalışılır
     super.initState();
 
@@ -110,6 +111,10 @@ class _SqllifeIslemleriState extends State<SqllifeIslemleri> {
     return IconButton(
       onPressed: () {
         _ogrenciSil(tumOgrencilerListesi![index].id, index);
+        // tıklanınlan eleman silindiyse güncelle buton pasifleştirilir
+        if (index == tiklanilanElemaninIndexi) {
+          tiklanilanElemaninIndexi = null;
+        }
       },
       icon: Icon(
         Icons.delete,
@@ -123,6 +128,7 @@ class _SqllifeIslemleriState extends State<SqllifeIslemleri> {
     return ElevatedButton(
       onPressed: () {
         _tumTabloyuTemizle();
+        tiklanilanElemaninIndexi = null;
       },
       child: Text("Tüm Tabloyu Sil"),
       style: ElevatedButton.styleFrom(primary: Colors.red),
@@ -131,17 +137,19 @@ class _SqllifeIslemleriState extends State<SqllifeIslemleri> {
 
   ElevatedButton guncelleButton() {
     return ElevatedButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          _ogrenciGuncelle(
-            Ogrenci.withId(
-              tumOgrencilerListesi![tiklanilanElemaninIndexi!].id,
-              _textController.text,
-              aktifMi == true ? 1 : 0,
-            ),
-          );
-        }
-      },
+      onPressed: tiklanilanElemaninIndexi == null
+          ? null
+          : () {
+              if (_formKey.currentState!.validate()) {
+                _ogrenciGuncelle(
+                  Ogrenci.withId(
+                    tumOgrencilerListesi![tiklanilanElemaninIndexi!].id,
+                    _textController.text,
+                    aktifMi == true ? 1 : 0,
+                  ),
+                );
+              }
+            },
       child: Text("Güncelle"),
       style: ElevatedButton.styleFrom(primary: Colors.orange),
     );
@@ -153,6 +161,7 @@ class _SqllifeIslemleriState extends State<SqllifeIslemleri> {
       style: ElevatedButton.styleFrom(primary: Colors.green),
       onPressed: () {
         if (_formKey.currentState!.validate()) {
+          _textController = TextEditingController();
           _ogrenciEkle(Ogrenci(_textController.text, aktifMi == true ? 1 : 0));
         }
       },

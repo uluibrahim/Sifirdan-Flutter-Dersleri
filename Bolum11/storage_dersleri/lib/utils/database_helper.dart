@@ -46,7 +46,7 @@ class DatabaseHelper {
   }
 
   _intializeDatabase() async {
-    // telefon hafızasında bulunan veri tabanına erişmek
+    // telefon hafızasında bulunan veri tabanına erişmek bulmak
     Directory klasor =
         await getApplicationDocumentsDirectory(); // dosyanın hangi klasorde bulunduğunu gösterir
     // ancak bizim burada ihtiyacımız dosyanın kendisi
