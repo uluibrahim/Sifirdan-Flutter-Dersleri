@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    db.kategoriTablosunuGetir();
+    // db.kategoriTablosunuGetir();
     return MaterialApp(
       title: 'Material App',
       home: Scaffold(
