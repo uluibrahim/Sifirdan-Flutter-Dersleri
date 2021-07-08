@@ -6,6 +6,42 @@ class Not {
   String? _notTarih;
   int? _notOncelik;
 
+  int? get notID => _notID;
+
+  set notID(int? notID) {
+    _notID = notID;
+  }
+
+  int? get kategoriID => _kategoriID;
+
+  set kategoriID(int? kategoriID) {
+    _kategoriID = kategoriID;
+  }
+
+  String? get notBaslik => _notBaslik;
+
+  set notBaslik(String? notBaslik) {
+    _notBaslik = notBaslik;
+  }
+
+  String? get notIcerik => _notIcerik;
+
+  set notIcerik(String? notIcerik) {
+    _notIcerik = notIcerik;
+  }
+
+  String? get notTarih => _notTarih;
+
+  set notTarih(String? notTarih) {
+    _notTarih = notTarih;
+  }
+
+  int? get notOncelik => _notOncelik;
+
+  set notOncelik(int? notOncelik) {
+    _notOncelik = notOncelik;
+  }
+
   // veri okurken
   Not(
     this._kategoriID,

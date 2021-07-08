@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // db.kategoriTablosunuGetir();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Material App',
       home: Scaffold(
         appBar: AppBar(
