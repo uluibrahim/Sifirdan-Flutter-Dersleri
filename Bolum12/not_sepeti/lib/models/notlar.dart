@@ -1,6 +1,14 @@
 class Not {
   int? _notID;
   int? _kategoriID;
+  String? _kategoriBaslik;
+
+  String? get kategoriBaslik => _kategoriBaslik;
+
+  set kategoriBaslik(String? kategoriBaslik) {
+    _kategoriBaslik = kategoriBaslik;
+  }
+
   String? _notBaslik;
   String? _notIcerik;
   String? _notTarih;
@@ -47,7 +55,6 @@ class Not {
     this._kategoriID,
     this._notBaslik,
     this._notIcerik,
-    this._notTarih,
     this._notOncelik,
   );
   //veri yazarken
@@ -56,17 +63,15 @@ class Not {
     this._kategoriID,
     this._notBaslik,
     this._notIcerik,
-    this._notTarih,
+    // this._notTarih,
     this._notOncelik,
   );
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    map["notID"] = _notID;
     map["kategoriID"] = _kategoriID;
     map["notBaslik"] = _notBaslik;
     map["notIcerik"] = _notIcerik;
-    map["notTarih"] = _notTarih;
     map["notOncelik"] = _notOncelik;
     return map;
   }
@@ -74,6 +79,7 @@ class Not {
   Not.fromMap(Map<String, dynamic> map) {
     this._notID = map["notID"];
     this._kategoriID = map["kategoriID"];
+    this._kategoriBaslik = map['kategoriBaslik'];
     this._notBaslik = map["notBaslik"];
     this._notIcerik = map["notIcerik"];
     this._notTarih = map["notTarih"];

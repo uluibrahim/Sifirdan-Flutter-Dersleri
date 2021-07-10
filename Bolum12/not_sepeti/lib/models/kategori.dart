@@ -10,7 +10,7 @@ class Kategori {
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    map["kategoriID"] = kategoriID;
+    // map["kategoriID"] = kategoriID;
     map["kategoriBaslik"] = _kategoriBaslik;
     return map;
   }
