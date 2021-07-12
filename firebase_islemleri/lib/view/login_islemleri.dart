@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -18,7 +19,10 @@ class _LoginIslemleriState extends State<LoginIslemleri> {
       if (user == null) {
         print('Kullanıcı oturumu kapattı!');
       } else {
-        print('Kullanıcı oturum açtı!');
+        if (user.emailVerified) {
+          print('Kullanıcı oturum açtı ve email onaylı');
+        } else
+          print('Kullanıcı oturum açtı ve email onaylı değil');
       }
     });
   }
@@ -67,6 +71,18 @@ class _LoginIslemleriState extends State<LoginIslemleri> {
                 _emailUpdate();
               },
               child: Text("Email güncelle"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _signInWithGoogle();
+              },
+              child: Text("Google ile giriş"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _signInWithPhone();
+              },
+              child: Text("Telfon ile giriş"),
             ),
           ],
         )));
@@ -177,5 +193,57 @@ class _LoginIslemleriState extends State<LoginIslemleri> {
         print("Email güncellenemedi");
       }
     }
+  }
+
+  _signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      print("Oturum açıldı");
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      return print("Google ile girişte hata oluştu");
+    }
+  }
+
+  void _signInWithPhone() async {
+    //+95 42 542 5422
+    //123456
+    await _auth.verifyPhoneNumber(
+      phoneNumber: '+95 42 542 5422',
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await _auth.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print("Verification failed hatası: $e");
+      },
+      codeSent: (String verificationId, int? resendToken) async {
+        print("Kod Yollandı..");
+        try {
+          String smsCode = '123456';
+
+          // Create a PhoneAuthCredential with the code
+          PhoneAuthCredential credential = PhoneAuthProvider.credential(
+              verificationId: verificationId, smsCode: smsCode);
+
+          // Sign the user in (or link) with the credential
+          await _auth.signInWithCredential(credential);
+        } catch (e) {
+          print("Kod hatası:  $e");
+        }
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
   }
 }
