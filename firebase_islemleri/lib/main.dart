@@ -1,3 +1,4 @@
+import 'package:firebase_islemleri/view/login_islemleri.dart';
 import 'package:flutter/material.dart';
 
 // Import the firebase_core plugin
@@ -5,7 +6,19 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(App());
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: App(),
+    );
+  }
 }
 
 class App extends StatefulWidget {
@@ -43,20 +56,20 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     // Show error message if initialization failed
     if (_error) {
-      return MaterialApp(
-        home: Scaffold(),
+      return Scaffold(
+        body: Center(
+          child: Text("HATA $_error"),
+        ),
       );
     }
 
     // Show a loader until FlutterFire is initialized
     if (!_initialized) {
-      return MaterialApp(
-        home: Scaffold(),
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator()),
       );
     }
 
-    return MaterialApp(
-      home: Scaffold(),
-    );
+    return LoginIslemleri();
   }
 }
