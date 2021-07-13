@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -11,9 +15,12 @@ class FirestoreIslemleri extends StatefulWidget {
 }
 
 class _FirestoreIslemleriState extends State<FirestoreIslemleri> {
+  PickedFile? _secilenResim;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text("Firestore işlemleri")),
       body: Center(
         child: Column(
@@ -25,6 +32,25 @@ class _FirestoreIslemleriState extends State<FirestoreIslemleri> {
             ElevatedButton(onPressed: _veriOku, child: Text("Veri oku")),
             ElevatedButton(
                 onPressed: _veriSorgula, child: Text("Veri sorgula")),
+            ElevatedButton(
+              onPressed: _galeriResimUpload,
+              child: Text("Galeriden storage a resim yükle"),
+              style: ElevatedButton.styleFrom(primary: Colors.orange),
+            ),
+            ElevatedButton(
+              onPressed: _kameraResimUpload,
+              child: Text("Kameradan storage a resim yükle"),
+              style: ElevatedButton.styleFrom(primary: Colors.teal),
+            ),
+            Expanded(
+              child: Center(
+                child: _secilenResim == null
+                    ? Text("RESİM YOK")
+                    : Image.file(
+                        File(_secilenResim!.path),
+                      ),
+              ),
+            ),
           ],
         ),
       ),
@@ -222,5 +248,44 @@ class _FirestoreIslemleriState extends State<FirestoreIslemleri> {
             }
           });
     });
+  }
+
+  _galeriResimUpload() async {
+    ImagePicker _picker = ImagePicker();
+    _picker.getImage(source: ImageSource.gallery).then((value) {
+      setState(() {
+        _secilenResim = value;
+      });
+    });
+
+    var ref = FirebaseStorage.instance
+        .ref()
+        .child("user")
+        .child("emre")
+        .child("emre.png");
+
+    TaskSnapshot uploadTask = await ref.putFile(File(_secilenResim!.path));
+
+    var url = await (await ref.getDownloadURL()).toString();
+    print(url);
+  }
+
+  void _kameraResimUpload() async {
+    ImagePicker _picker = ImagePicker();
+    _picker.getImage(source: ImageSource.camera).then((value) {
+      setState(() {
+        _secilenResim = value;
+      });
+    });
+    var ref = FirebaseStorage.instance
+        .ref()
+        .child("user")
+        .child("hasan")
+        .child("hasan.png");
+
+    TaskSnapshot uploadTask = await ref.putFile(File(_secilenResim!.path));
+
+    var url = await (await ref.getDownloadURL()).toString();
+    print(url);
   }
 }
