@@ -1,3 +1,4 @@
+import 'package:firebase_islemleri/view/firestore_islemleri.dart';
 import 'package:firebase_islemleri/view/login_islemleri.dart';
 import 'package:flutter/material.dart';
 
@@ -70,6 +71,6 @@ class _AppState extends State<App> {
       );
     }
 
-    return LoginIslemleri();
+    return FirestoreIslemleri();
   }
 }
