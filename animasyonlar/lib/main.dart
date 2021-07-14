@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'view/hero.dart';
+import 'view/staggered_animation.dart';
 
 void main() {
   runApp(MyApp());
@@ -135,6 +136,13 @@ class _MyHomePageState extends State<MyHomePage>
                     builder: (context) => HeroAnimation("tag")));
               },
               child: Text("Hero"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => StaggeredAnimation()));
+              },
+              child: Text("Staggered"),
             ),
           ],
         ),
