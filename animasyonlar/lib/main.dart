@@ -1,3 +1,4 @@
+import 'package:animasyonlar/view/animation_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'view/hero.dart';
@@ -143,6 +144,17 @@ class _MyHomePageState extends State<MyHomePage>
                     builder: (context) => StaggeredAnimation()));
               },
               child: Text("Staggered"),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Colors.white),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AnimationWidgets()));
+              },
+              child: Text(
+                "Animated Widget",
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ],
         ),
