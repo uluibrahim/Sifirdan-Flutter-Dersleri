@@ -20,8 +20,9 @@ class ProviderWithCounter extends StatelessWidget {
 class MyFabButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var myCounter = Provider.of<Counter>(context);
-
+    var myCounter = Provider.of<Counter>(context, listen: false);
+    // burada listenfalse yaparak butona her tıklandığında  build olmasını engelledik
+    print("fab build");
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -44,7 +45,9 @@ class MyFabButtons extends StatelessWidget {
 class MyColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var myCounter = Provider.of<Counter>(context);
+    print("column build");
+    // var myCounter = Provider.of<Counter>(context);
+    // buradaki yapı yerine watch kullanılabilir
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -53,7 +56,7 @@ class MyColumn extends StatelessWidget {
           style: TextStyle(fontSize: 25),
         ),
         Text(
-          myCounter.counter.toString(),
+          context.watch<Counter>().counter.toString(),
           style: TextStyle(fontSize: 25),
         ),
       ],
