@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:flutter_lovers/models/user_model.dart';
 import 'package:flutter_lovers/services/auth_base.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -17,7 +18,7 @@ class FirebaseAuthService implements AuthBase {
   }
 
   MyUser _useFromFirebase(User user) {
-    return MyUser(userId: user.uid);
+    return MyUser(userId: user.uid, email: user.email.toString());
   }
 
   @override
@@ -34,6 +35,10 @@ class FirebaseAuthService implements AuthBase {
   @override
   Future<bool> signOut() async {
     try {
+      final _googleSignIn = GoogleSignIn();
+      _googleSignIn.signOut();
+      final _faceSignIn = FacebookLogin();
+      _faceSignIn.logOut();
       await _firebaseAuth.signOut();
       return true;
     } catch (e) {
@@ -64,5 +69,51 @@ class FirebaseAuthService implements AuthBase {
     } else {
       throw Exception();
     }
+  }
+
+  @override
+  Future<MyUser> signInWithFacebook() async {
+    final _facebookLogin = FacebookLogin();
+    FacebookLoginResult _loginResult = await _facebookLogin.logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email
+    ]);
+
+    switch (_loginResult.status) {
+      case FacebookLoginStatus.success:
+        if (_loginResult.accessToken != null) {
+          UserCredential _fireResult = await _firebaseAuth.signInWithCredential(
+            FacebookAuthProvider.credential(_loginResult.accessToken!.token),
+          );
+          User? user = _fireResult.user;
+          return _useFromFirebase(user!);
+        }
+        break;
+      case FacebookLoginStatus.cancel:
+        print("User facebook girişini iptal etti");
+        break;
+      case FacebookLoginStatus.error:
+        print("Facebook login hatasi: " + _loginResult.error.toString());
+        break;
+      default:
+    }
+    throw Exception();
+  }
+
+  @override
+  Future<MyUser> createUserWithEmailAndPassword(
+      String email, String password) async {
+    UserCredential sonuc = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    return _useFromFirebase(sonuc.user!);
+  }
+
+  @override
+  Future<MyUser> signInWithEmailAndPassword(
+      String email, String password) async {
+    UserCredential sonuc = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+    return _useFromFirebase(sonuc.user!);
   }
 }

@@ -3,15 +3,20 @@ import 'package:flutter_lovers/services/auth_base.dart';
 
 class FakeAuthService implements AuthBase {
   String userId = "123456";
+  String email = "123@gmail.com";
   @override
   Future<MyUser> currentUser() async {
-    return await Future.value(MyUser(userId: userId));
+    return await Future.value(
+      MyUser(userId: userId, email: email),
+    );
   }
 
   @override
   Future<MyUser> signInAnonymously() async {
     return await Future.delayed(
-        Duration(seconds: 1), () => MyUser(userId: userId));
+      Duration(seconds: 1),
+      () => MyUser(userId: userId, email: email),
+    );
   }
 
   @override
@@ -20,8 +25,34 @@ class FakeAuthService implements AuthBase {
   }
 
   @override
-  Future<MyUser> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
-    throw UnimplementedError();
+  Future<MyUser> signInWithGoogle() async {
+    return await Future.delayed(
+      Duration(seconds: 1),
+      () => MyUser(userId: "googleuserid", email: "google@gmail.com"),
+    );
+  }
+
+  @override
+  Future<MyUser> signInWithFacebook() async {
+    return await Future.delayed(Duration(seconds: 1),
+        () => MyUser(userId: "facebookuserid", email: "facebook@gmail.com"));
+  }
+
+  @override
+  Future<MyUser> createUserWithEmailAndPassword(
+      String email, String password) async {
+    return await Future.delayed(
+        Duration(seconds: 1),
+        () => MyUser(
+            userId: "createEmialAndPasswordid", email: "create@gmail.com"));
+  }
+
+  @override
+  Future<MyUser> signInWithEmailAndPassword(
+      String email, String password) async {
+    return await Future.delayed(
+        Duration(seconds: 1),
+        () => MyUser(
+            userId: "signinEmialAndPasswordid", email: "email@gmail.com"));
   }
 }

@@ -1,25 +1,38 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lovers/common_widget/social_login_in_button.dart';
-import 'package:flutter_lovers/models/user_model.dart';
 
 import 'package:flutter_lovers/viewmodel/user_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import 'email_sifre_giris_kayit.dart';
+
 class SignInPage extends StatelessWidget {
-  void _misafirGiris(BuildContext context, UserViewModel userModel) async {
-    MyUser sonuc = await userModel.signInAnonymously();
-    print("Oturum açan user ıd: " + sonuc.userId.toString());
+  // void _misafirGiris(BuildContext context, UserViewModel userModel) async {
+  //   MyUser sonuc = await userModel.signInAnonymously();
+  //   print("Oturum açan user ıd: " + sonuc.userId.toString());
+  // }
+
+  void _googleIleGirisYap(UserViewModel userModel) async {
+    await userModel.signInWithGoogle();
   }
 
-  void _googleIleGirisYap(BuildContext context, UserViewModel userModel) async {
-    MyUser sonuc = await userModel.signInWithGoogle();
-    //print("Google ile giriş : " + sonuc.userId.toString());
+  void _facebookIleGirisYap(UserViewModel userModel) async {
+    await userModel.signInWithFacebook();
+  }
+
+  void _emailIleGirs(BuildContext context) {
+    Navigator.of(context).push(
+      // Cupertino sayfanın yandan açılmasını sağlar ios cihazlarda olduğu gibi
+      CupertinoPageRoute(builder: (context) => EmailAndPasswordLoginPage()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final _userModel = Provider.of<UserViewModel>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text("Flutter lovers"), elevation: 0),
       body: Container(
         padding: EdgeInsets.all(20),
@@ -37,26 +50,19 @@ class SignInPage extends StatelessWidget {
               buttonColor: Colors.white,
               textColor: Colors.black54,
               buttonIcon: Image.asset("assets/images/google-logo.png"),
-              onPressed: () => _googleIleGirisYap(context, _userModel),
+              onPressed: () => _googleIleGirisYap(_userModel),
             ),
             SocialLoginButton(
               buttonText: "Facebook ile oturum açın",
               buttonIcon: Image.asset("assets/images/facebook-logo.png",
                   fit: BoxFit.cover),
-              onPressed: () {},
+              onPressed: () => _facebookIleGirisYap(_userModel),
             ),
             SocialLoginButton(
               buttonText: "Email ile oturum açın",
               buttonColor: Colors.tealAccent.shade700,
               buttonIcon: Icon(Icons.email),
-              onPressed: () {
-                print("object");
-              },
-            ),
-            SocialLoginButton(
-              buttonText: "Misafir girişi",
-              buttonColor: Colors.orange,
-              onPressed: () => _misafirGiris(context, _userModel),
+              onPressed: () => _emailIleGirs(context),
             ),
           ],
         ),

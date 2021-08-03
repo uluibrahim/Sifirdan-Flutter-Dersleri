@@ -7,7 +7,7 @@ import 'package:flutter_lovers/landing_page.dart';
 import 'package:flutter_lovers/viewmodel/user_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-import 'locator.dart';
+import 'app/locator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,9 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: App(),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => UserViewModel(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: App(),
+      ),
     );
   }
 }
@@ -76,9 +79,6 @@ class _AppState extends State<App> {
       );
     }
 
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => UserViewModel(),
-      child: LandingPage(),
-    );
+    return LandingPage();
   }
 }
