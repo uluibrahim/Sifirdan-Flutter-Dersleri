@@ -20,14 +20,14 @@ class _HomePageState extends State<HomePage> {
   Map<TabItem, Widget> tumSayfalar() {
     return {
       TabItem.Kullanicilar: KullanicilarPage(),
-      TabItem.Konusmalirim: KonusmalarimPage(),
+      TabItem.Konusmalarim: KonusmalarimPage(),
       TabItem.Profil: ProfilPage(),
     };
   }
 
   Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.Kullanicilar: GlobalKey<NavigatorState>(),
-    TabItem.Konusmalirim: GlobalKey<NavigatorState>(),
+    TabItem.Konusmalarim: GlobalKey<NavigatorState>(),
     TabItem.Profil: GlobalKey<NavigatorState>(),
   };
 
@@ -47,6 +47,11 @@ class _HomePageState extends State<HomePage> {
           } else {
             setState(() {
               _currentTab = secilenTab;
+              /** 
+               * refresh kullanımı olmaz ise buradaki kodlar ile anlık güncelleme yapılabilir
+              if (_currentTab == TabItem.Konusmalarim) {
+                (context as Element).reassemble(); // yeniden build etmeye yarar
+              }*/
             });
           }
 

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter_lovers/app/locator.dart';
 import 'package:flutter_lovers/models/konusma_model.dart';
 import 'package:flutter_lovers/models/message.dart';
@@ -10,6 +8,7 @@ import 'package:flutter_lovers/services/firebase_auth_service.dart';
 import 'package:flutter_lovers/services/firebase_storage_service.dart';
 import 'package:flutter_lovers/services/firestore_db_service.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 enum AppMode { DEBUG, RELEASE }
 
@@ -20,6 +19,8 @@ class UserRepostory implements AuthBase {
   FirebaseStorageService _firebaseStorageService =
       locator<FirebaseStorageService>();
   AppMode _appMode = AppMode.RELEASE;
+
+  List<MyUser> _allUsers = [];
   @override
   Future<MyUser> currentUser() async {
     if (_appMode == AppMode.DEBUG) {
@@ -138,8 +139,8 @@ class UserRepostory implements AuthBase {
     if (_appMode == AppMode.DEBUG) {
       return [];
     } else {
-      List<MyUser> allUsers = await _firestoreDBService.getAllUesr();
-      return allUsers;
+      _allUsers = await _firestoreDBService.getAllUesr();
+      return _allUsers;
     }
   }
 
@@ -166,7 +167,47 @@ class UserRepostory implements AuthBase {
     if (_appMode == AppMode.DEBUG) {
       return [];
     } else {
-      return await _firestoreDBService.getAllConversations(userId);
+      DateTime _okunmaZamani = await _firestoreDBService.saatiGoster(userId);
+      List<KonusmaModel> konusmaListesi;
+      konusmaListesi = await _firestoreDBService.getAllConversations(userId);
+      for (KonusmaModel oankiKonusma in konusmaListesi) {
+        MyUser? userListesindekikullanici =
+            _listedeUserBul(oankiKonusma.kimleKonusuyor.toString());
+        if (userListesindekikullanici != null) {
+          print("veriler local cacheden okundu");
+          oankiKonusma.konusulanUserName = userListesindekikullanici.userName;
+          oankiKonusma.konusulanUserProfilURL =
+              userListesindekikullanici.profilURL;
+          oankiKonusma.sonOkunmaZamani = _okunmaZamani;
+        } else {
+          print("aranılan userdaha önce getirilmemiş");
+          MyUser veritabindanOkunanUser = await _firestoreDBService
+              .readUser(oankiKonusma.kimleKonusuyor.toString());
+          oankiKonusma.konusulanUserName = veritabindanOkunanUser.userName;
+          oankiKonusma.konusulanUserProfilURL =
+              veritabindanOkunanUser.profilURL;
+          oankiKonusma.sonOkunmaZamani = _okunmaZamani;
+        }
+        _timeagoHesapla(oankiKonusma, _okunmaZamani);
+      }
+      return konusmaListesi;
     }
+  }
+
+  MyUser? _listedeUserBul(String userId) {
+    for (var i = 0; i < _allUsers.length; i++) {
+      if (_allUsers[i].userId == userId) {
+        return _allUsers[i];
+      }
+    }
+    return null;
+  }
+
+  void _timeagoHesapla(KonusmaModel oankiKonusma, DateTime okunmaZamani) {
+    timeago.setLocaleMessages("tr", timeago.TrMessages());
+    Duration _duration =
+        okunmaZamani.difference(oankiKonusma.olusturmaTarihi!.toDate());
+    oankiKonusma.aradakiZamanFarki =
+        timeago.format(okunmaZamani.subtract(_duration), locale: "tr");
   }
 }

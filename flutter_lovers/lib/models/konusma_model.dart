@@ -7,6 +7,10 @@ class KonusmaModel {
   final Timestamp? olusturmaTarihi;
   final String? sonYollananMesaj;
   final Timestamp? gorulmeTarihi;
+  String? konusulanUserName;
+  String? konusulanUserProfilURL;
+  DateTime? sonOkunmaZamani;
+  String? aradakiZamanFarki;
   KonusmaModel({
     this.konusmaSahibi,
     this.kimleKonusuyor,
@@ -21,7 +25,7 @@ class KonusmaModel {
       "konusma_sahibi": konusmaSahibi,
       "kimle_konusuyor": kimleKonusuyor,
       "goruldu": goruldu,
-      "olusturma_tarihi": olusturmaTarihi ?? FieldValue.serverTimestamp(),
+      "olusturulma_tarihi": olusturmaTarihi ?? FieldValue.serverTimestamp(),
       "son_yollanan_mesaj": sonYollananMesaj,
       "gorulme_tarihi": gorulmeTarihi ?? FieldValue.serverTimestamp(),
     };
@@ -31,7 +35,7 @@ class KonusmaModel {
       : konusmaSahibi = map["konusma_sahibi"],
         kimleKonusuyor = map["kimle_konusuyor"],
         goruldu = map["goruldu"],
-        olusturmaTarihi = map["olusturma_tarihi"],
+        olusturmaTarihi = map["olusturulma_tarihi"],
         sonYollananMesaj = map["son_yollanan_mesaj"],
         gorulmeTarihi = map["gorulme_tarihi"];
 

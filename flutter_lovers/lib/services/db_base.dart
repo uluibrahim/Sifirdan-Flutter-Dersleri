@@ -13,4 +13,5 @@ abstract class DBBase {
   Stream<List<MessageModel>> getMessages(
       String currentUserId, String sohbetEdilenUserId);
   Future<bool> saveMessage(MessageModel mesaj);
+  Future<DateTime> saatiGoster(String userId);
 }

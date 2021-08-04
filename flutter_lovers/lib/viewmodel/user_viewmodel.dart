@@ -177,6 +177,6 @@ class UserViewModel with ChangeNotifier implements UserRepostory {
   }
 
   Future<List<KonusmaModel>> getAllConversations(String userId) async {
-    return await _repostory.getAllConversations(userId);
+    return _repostory.getAllConversations(userId);
   }
 }

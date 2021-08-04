@@ -5,9 +5,14 @@ import 'package:provider/provider.dart';
 
 import 'konusma.dart';
 
-class KullanicilarPage extends StatelessWidget {
+class KullanicilarPage extends StatefulWidget {
   const KullanicilarPage({Key? key}) : super(key: key);
 
+  @override
+  _KullanicilarPageState createState() => _KullanicilarPageState();
+}
+
+class _KullanicilarPageState extends State<KullanicilarPage> {
   @override
   Widget build(BuildContext context) {
     final _userModel = Provider.of<UserViewModel>(context);
@@ -15,40 +20,68 @@ class KullanicilarPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Kullanicilar"),
       ),
-      body: FutureBuilder<List<MyUser>>(
-          future: _userModel.getAllUser(),
-          builder: (BuildContext context, AsyncSnapshot<List<MyUser>> result) {
-            if (result.hasData) {
-              List<MyUser>? allUsers = result.data;
-              if (allUsers!.length - 1 > 0) {
-                return ListView.builder(
-                  itemCount: allUsers.length,
-                  itemBuilder: (context, index) {
-                    MyUser anlikUser = allUsers[index];
-
-                    if (anlikUser.userId != _userModel.user!.userId) {
-                      return ListTile(
-                        leading: CircleAvatar(
-                          radius: 35,
-                          backgroundImage:
-                              NetworkImage(anlikUser.profilURL.toString()),
+      body: RefreshIndicator(
+        onRefresh: () => _kullanicilarPageYenile(),
+        child: FutureBuilder<List<MyUser>>(
+            future: _userModel.getAllUser(),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<MyUser>> result) {
+              if (result.hasData) {
+                List<MyUser>? allUsers = result.data;
+                if (allUsers!.length - 1 > 0) {
+                  return ListView.builder(
+                    itemCount: allUsers.length,
+                    itemBuilder: (context, index) {
+                      MyUser anlikUser = allUsers[index];
+                      if (anlikUser.userId != _userModel.user!.userId) {
+                        return ListTile(
+                          leading: CircleAvatar(
+                            radius: 35,
+                            backgroundImage:
+                                NetworkImage(anlikUser.profilURL.toString()),
+                          ),
+                          subtitle: Text(anlikUser.email.toString()),
+                          title: Text(anlikUser.userName.toString()),
+                          onTap: () =>
+                              _chatPage(context, _userModel, anlikUser),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
+                  );
+                } else {
+                  return RefreshIndicator(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.supervised_user_circle,
+                                size: 80,
+                              ),
+                              Text(
+                                "Kayıtlı kullanıcı bulunamadı",
+                                style: TextStyle(fontSize: 25),
+                              )
+                            ],
+                          ),
                         ),
-                        subtitle: Text(anlikUser.email.toString()),
-                        title: Text(anlikUser.userName.toString()),
-                        onTap: () => _chatPage(context, _userModel, anlikUser),
-                      );
-                    } else {
-                      return SizedBox();
-                    }
-                  },
-                );
+                      ),
+                    ),
+                    onRefresh: () => _kullanicilarPageYenile(),
+                  );
+                }
               } else {
-                return Center(child: Text("Kayıtlı kullanıcı bulunumadı"));
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          }),
+            }),
+      ),
     );
   }
 
@@ -62,5 +95,9 @@ class KullanicilarPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _kullanicilarPageYenile() async {
+    setState(() {});
   }
 }

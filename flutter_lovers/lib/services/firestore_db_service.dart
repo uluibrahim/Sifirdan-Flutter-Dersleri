@@ -129,7 +129,7 @@ class FirestoreDBService implements DBBase {
       "kimle_konusuyor": mesaj.kime,
       "son_yollanan_mesaj": mesaj.message,
       "konusma_goruldu": false,
-      "olusturma_tarihi": FieldValue.serverTimestamp(),
+      "olusturulma_tarihi": FieldValue.serverTimestamp(),
     });
 
     // yukarıdaki kayıttan sonra sohbet edilen kişiyede kayıt yapılmalı
@@ -152,8 +152,22 @@ class FirestoreDBService implements DBBase {
       "kimle_konusuyor": mesaj.kimden,
       "son_yollanan_mesaj": mesaj.message,
       "konusma_goruldu": false,
-      "olusturma_tarihi": FieldValue.serverTimestamp(),
+      "olusturulma_tarihi": FieldValue.serverTimestamp(),
     });
     return true;
+  }
+
+  @override
+  Future<DateTime> saatiGoster(String userId) async {
+    await _firebaseFirestore
+        .collection("server")
+        .doc(userId)
+        .set({"saat": FieldValue.serverTimestamp()});
+
+    DocumentSnapshot okunanMap =
+        await _firebaseFirestore.collection("server").doc(userId).get();
+    Timestamp okunanTarih = okunanMap["saat"];
+
+    return okunanTarih.toDate();
   }
 }

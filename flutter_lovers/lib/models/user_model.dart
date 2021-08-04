@@ -40,6 +40,9 @@ class MyUser {
         updatedAt = (map["updatedAt"] as Timestamp).toDate(),
         seviye = map["seviye"];
 
+  MyUser.userIdAndProfilPhotoAndUserName(
+      {required this.userId, required this.profilURL, required this.userName});
+
   @override
   String toString() {
     return "User{ userId: $userId, email: $email, userName: $userName, profilURL: $profilURL, createAt: $createdAt, updateAt: $updatedAt}";
